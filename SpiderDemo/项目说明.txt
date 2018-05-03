@@ -1,0 +1,108 @@
+1）Bll下面放数据库直接操作层
+2）DAL下面放数据库访问层
+3）InerfaceS下面存放公用的接口
+4）Lib下面存放公用的dll
+5）Model下面存放公用的Model类
+6）App.config为公用的配置文件
+7）Spiders下面为各个爬虫所在的目录，建议文件名加上Spider
+8）所有爬虫从各自的MyStart类的Start入口启动
+
+具体说明如下：
+每个爬虫都带有Mark，Model，Resources，Task几个文件夹，接着就是爬虫任务执行的一些类。
+拿SpiderDemo下的TestSpider来说，GrabAllInfo类用来实现抓取任务的流程，MyParallel类是爬虫遍历逻辑的实现，
+MyStart类为爬虫的启动入口。
+Mark下面存放该爬虫的抓取说明文档和启动说明文档，发布版本时，将该启动说明放置于程序运行目录下；
+Model下面存放该爬虫需要用到的特有的类模型；
+Resources下面存放该爬虫需要用到的一些资源性文件；
+Task下面的TaskToDo类实现最开始任务源的入库操作。
+
+整个爬虫的大体执行流程如下：
+
+//启动爬虫
+MyStart.Start()
+{
+	//导入任务源
+	TaskToDo.Start();
+	//启动执行爬虫需求任务（例如更新，抓新，基础，全维度，类名自己定义）
+	GrabAllInfo.Start()
+	{
+		//TODO：爬虫配置信息初始化，检测是否异常
+        InitSpider();
+		//TODO：获取爬虫任务源
+		GetTask();
+		//TODO：执行相应的任务，包括任务回收和异常处理
+        DoTask()
+		{
+			//并发动作,里面就是一个遍历逻辑的实现
+			System.Threading.Tasks.Parallel.Invoke(并发动作)
+			{
+				并发动作()
+				{		
+					//符合对应模板的进入对应遍历逻辑
+					switch (模板名)
+					{
+						case "模板名":
+							Request_模板名()
+							{
+								try
+								{
+									//请求头，也基本上实现了通用（这里包括账号Cookie，代理Ip）
+									//核心就在判断请求下来的页面是否符合要求，相关逻辑判断写在这块，符合条件的进行存储和解析新增的任务，需要打码的增加打码
+									//存储方式，任务执行状态更改，数据监控计数，文件写入异常，解析数据异常，也基本上实现了通用
+									//不符合要求的异常数据记录到指定的文件夹下面，方便查看异常情况
+								}
+								catch (WebException ex)
+								{
+									//服务器异常，这块已经基本上实现通用
+								}
+								catch (Exception e)
+								{
+									//解析异常，这块已经基本上实现通用
+								}
+							}
+							break;							
+						default:
+							//未识别的模板，做好状态标志
+							Request_Extra();
+							break;
+					}					
+				}				
+			}
+			//TODO：回收任务
+            GcTask();
+			//TODO：发送请求异常处理的邮件通知
+			FixException();
+		}
+	}
+}
+具体的实现可以根据现有的demo案例模式进行变通，demo是一个很细化的案例模式，大体结构按这个去做就行了，
+方法命名上统一标准，方便清晰明了的知道爬虫整体的运作逻辑。
+
+内部需要用到的通用爬虫模型类为：SpiderHelp.ConfigModule.TaskUrlConfig;
+爬虫默认提供的初始化配置类为：Model.MySpiderConfig，里面包含
+SpiderHelp.ConfigModule.SpiderConfig，
+SpiderHelp.ConfigModule.CountConfig，
+List<TaskUrlConfig>，
+SpiderHelp.MonitorModule.Spiderinfo，
+SpiderHelp.MonitorModule.GenericErrorCode。
+
+SpiderConfig为appConfig的配置；
+CountConfig用于方便自己统计数据查看使用，显示在程序界面上的;
+List<TaskUrlConfig>为通用模板类集合，用于回收任务和新增任务；
+Spiderinfo为爬虫监控系统类，需要进行初始化，相关计数变量在任务遍历逻辑里面进行相应的计算操作;
+GenericErrorCode为程序代码处理类，对应异常处理的计数变量也在遍历逻辑里面进行对应的计算操作，计数达到一定阈值，触发对应的异常处理机制;
+ProxyConfig为爬虫代理信息类;
+CookieConfig为爬虫账号Cookie类，无账号的，可以只使用默认初始化账号的Cookie置为空。
+
+注意使用数据库时，使用一个全局变量，例如：
+ /// <summary>
+/// 数据库操作对象
+/// </summary>
+private static readonly IndexBll spideBll = new IndexBll(System.Configuration.ConfigurationManager.AppSettings["Spider_Mysql_Ali"]);
+//更新操作
+spideBll.Update(updateSql);
+
+详细的操作请看SpderDemo项目。
+
+--lxb@jiuweiwang.com
+2018年4月26日12:00:03

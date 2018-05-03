@@ -1,0 +1,17 @@
+﻿CREATE TABLE `XXX_allinfo_url` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增长Id',
+  `Uid` varchar(64) NOT NULL COMMENT '带标志性的Uid字符',
+  `CompanyName` varchar(255) NOT NULL COMMENT '公司名',
+  `Tab` varchar(16) NOT NULL COMMENT '模板名',
+  `Url` varchar(500) NOT NULL COMMENT '请求链接',
+  `Md5` varchar(32) NOT NULL COMMENT 'Url压缩后的Md5值',
+  `Method` varchar(10) NOT NULL COMMENT '请求方式get或者post',
+  `ICount` int(5) NOT NULL DEFAULT '0' COMMENT '获取结果集的数量',
+  `IState` int(2) NOT NULL DEFAULT '0' COMMENT '任务获取状态,0未抓取,1成功抓取',
+  `Queue_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '任务入队时间',
+  `Done_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '任务操作时间',
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `index_md5_k` (`Md5`) USING BTREE COMMENT 'MD5唯一索引',
+  KEY `index_istate` (`IState`) COMMENT '任务抓取状态索引',
+  KEY `index_tab` (`Tab`) COMMENT '模板名索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='XXX抓取_lxb';

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E4B5681-7665-4123-AE15-EC0494A246A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpiderHelp</RootNamespace>
+    <AssemblyName>SpiderHelp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SpiderHelp.xml</DocumentationFile>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.3.9.1, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlgorithmModule\AlgorithmHelper.cs" />
+    <Compile Include="ConfigModule\CookieConfig.cs" />
+    <Compile Include="ConfigModule\CountConfig.cs" />
+    <Compile Include="ConfigModule\ProxyConfig.cs" />
+    <Compile Include="ConfigModule\TaskUrlConfig.cs" />
+    <Compile Include="ExtStaticModule\ImgHelp.cs" />
+    <Compile Include="ExtStaticModule\JsonHandleHelper.cs" />
+    <Compile Include="InterfaceModule\ICountConfig.cs" />
+    <Compile Include="InterfaceModule\ICookieConfig.cs" />
+    <Compile Include="InterfaceModule\ITaskUrlConfig.cs" />
+    <Compile Include="InterfaceModule\IProxyConfig.cs" />
+    <Compile Include="InterfaceModule\ISpiderConfig.cs" />
+    <Compile Include="ConfigModule\SpiderConfig.cs" />
+    <Compile Include="SaveModule\DirectoryAllFiles.cs" />
+    <Compile Include="SaveModule\CLog.cs" />
+    <Compile Include="VerificationCode\RuoKuaiHttp.cs" />
+    <Compile Include="VerificationCode\GetMiniMage.cs" />
+    <Compile Include="ExtStaticModule\MyConvert.cs" />
+    <Compile Include="MessageModule\Email.cs" />
+    <Compile Include="ExtStaticModule\ExtStatic.cs" />
+    <Compile Include="SaveModule\FileIoHelp.cs" />
+    <Compile Include="MonitorModule\GenericErrorCode.cs" />
+    <Compile Include="ConfigModule\MyConfig.cs" />
+    <Compile Include="ProxyModule\MyProxy.cs" />
+    <Compile Include="SaveModule\MySqlHelp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MonitorModule\Spiderinfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\HtmlAgilityPack.dll" />
+    <Content Include="Resources\MySql.Data.dll" />
+    <Content Include="Resources\Newtonsoft.Json.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

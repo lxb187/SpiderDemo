@@ -1,0 +1,10 @@
+******XXX抓取******
+时间: 2018年4月4日19:11:47
+阿里云数据库 （jiuweiwang.mysql.rds.aliyuncs.com）
+任务源表 XXX
+
+get请求
+基础详情
+示例链接 XXX
+文件命名 XXX
+******
